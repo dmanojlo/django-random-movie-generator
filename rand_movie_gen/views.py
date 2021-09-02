@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from scrapyd_api import ScrapydAPI
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+import json
 # Create your views here.
 
 scrapyd = ScrapydAPI('http://localhost:6800')
@@ -12,25 +13,42 @@ scrapyd = ScrapydAPI('http://localhost:6800')
 @csrf_exempt
 @require_http_methods(['POST', 'GET'])  # only get and post
 def index(request):
-    settings = {
-            'FEED_URI': 'result.json',
-            'FEED_FORMAT': 'json'
-        }
-    task = scrapyd.schedule('default', 'top', settings=settings)
-    print(task)
-    return render(request, 'rand_movie_gen/index.html', {})
+    data = dict()
+    # settings = {
+    #         'FEED_URI': 'result.json',
+    #         'FEED_FORMAT': 'json'
+    #     }
+    task = ''
+    task_id = request.GET.get('task_id', None)
+    if task_id is None:
+        task = scrapyd.schedule('default', 'top')
+    if request.method == 'GET':
+        task_id = request.GET.get('task_id', None)
+        if task_id is not None:
+            task_id = task_id[:-1]
+            print(task_id)
+        status = scrapyd.job_status('default', task_id)
+        print(status)
+        if status == 'finished':
+            with open(r"C:\Users\dmanojlovic\Documents\django_random_movie_generator\src\movie_generator\scrape_top_movies\result.json") as f:
+                jso = json.load(f)
+            data['jsi'] = jso
+            print(data)
+            return JsonResponse(data)
+    return render(request, 'rand_movie_gen/index.html', {'task':task})
 
 
 
-
-# from django.core.management.base import BaseCommand
 # from scrape_top_movies.scrape_top_movies.spiders.scrape_movies import TopRatedMovies
 # from scrapy.crawler import CrawlerProcess
 # from scrapy.utils.project import get_project_settings
+# from scrapy.signalmanager import dispatcher
+# from scrapy import signals
+#
 #
 # process = CrawlerProcess(get_project_settings())
-#
-# # var = name of spider
-#
+
+# var = name of spider
+
 # process.crawl(TopRatedMovie)
 # process.start()

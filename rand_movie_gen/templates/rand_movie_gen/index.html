@@ -1,1 +1,45 @@
+{% extends 'rand_movie_gen/base.html' %}
+{% load static %}
+
+{% block content %}
 <h1>It works</h1>
+<p class="title"></p>
+{% endblock %}
+
+{% block javascript %}
+<!-- <script src="{% static 'js/crawl-check.js' %}"></script> -->
+<script type="text/javascript">
+
+var taskId = '{{task}}';
+
+    $.ajax({
+        url: '/api/crawl/',
+        type: 'GET',
+        success:  crawlSuccess,
+        //error: crawlFail,
+    })
+
+  function checkCrawlStatus(taskId){
+        $.ajax({
+            url: '/api/crawl/?task_id='+taskId+'/',
+            type: 'GET',
+            success: function(data){
+              $('.title').html(data.jsi)
+            }
+            //error: console.log('no'),
+        })
+    }
+
+function crawlSuccess(taskId){
+    taskId = '{{task}}'
+    //uniqueId = data.unique_id;
+    statusInterval = setInterval(function() {checkCrawlStatus(taskId);}, 4000);
+}
+
+// function crawlFail(data){
+//     $('#progress').html(data.responseJSON.error);
+//     $('#progress').attr("class", "alert alert-danger");
+// }
+
+</script>
+{% endblock %}
