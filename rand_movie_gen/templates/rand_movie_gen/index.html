@@ -4,38 +4,51 @@
 {% block content %}
 <h1>It works</h1>
 <p class="title"></p>
+<button type="button" name="button">Crawl</button>
+<p>{{task}}</p>
 {% endblock %}
 
 {% block javascript %}
 <!-- <script src="{% static 'js/crawl-check.js' %}"></script> -->
 <script type="text/javascript">
 
-var taskId = '{{task}}';
+// var taskId = '{{task}}';
+// console.log(taskId)
 
+$(document).ready(function() {
+
+$(document).on('click', 'button', function(){
     $.ajax({
         url: '/api/crawl/',
-        type: 'GET',
+        type: 'POST',
         success:  crawlSuccess,
         //error: crawlFail,
-    })
+    });
 
-  function checkCrawlStatus(taskId){
+
+
+
+  function checkCrawlStatus(task){
         $.ajax({
             url: '/api/crawl/?task_id='+taskId+'/',
             type: 'GET',
             success: function(data){
-              $('.title').html(data.jsi)
+              if(data.status === 'finished'){
+              $('.title').html(data.jsi[0].movie_name)
+            }
             }
             //error: console.log('no'),
         })
     }
 
-function crawlSuccess(taskId){
-    taskId = '{{task}}'
+function crawlSuccess(task){
+    taskId = task.task
     //uniqueId = data.unique_id;
     statusInterval = setInterval(function() {checkCrawlStatus(taskId);}, 4000);
 }
 
+});
+});
 // function crawlFail(data){
 //     $('#progress').html(data.responseJSON.error);
 //     $('#progress').attr("class", "alert alert-danger");
