@@ -2,16 +2,20 @@
 {% load static %}
 
 {% block content %}
-<h1>It works</h1>
-<p class="title"></p>
-<button type="button" name="button">Crawl</button>
-<p>{{task}}</p>
+<div class="main">
+    <div class="center">
+        <h1 class="fir fadeIn">Don't have any idea what to watch?</h1>
+        <h1 class="sec fadeIn">Click button to randomly pick 250 best rated movies from imdb</h1>
+        <button type="button" class="button-white fade" name="button">Pick random movie</button>
+    </div>
+  </div>
 {% endblock %}
 
 {% block javascript %}
 <!-- <script src="{% static 'js/crawl-check.js' %}"></script> -->
 <script type="text/javascript">
 
+var statusInterval;
 // var taskId = '{{task}}';
 // console.log(taskId)
 
@@ -35,6 +39,7 @@ $(document).on('click', 'button', function(){
             success: function(data){
               if(data.status === 'finished'){
               $('.title').html(data.jsi[0].movie_name)
+              clearInterval(statusInterval)
             }
             }
             //error: console.log('no'),
