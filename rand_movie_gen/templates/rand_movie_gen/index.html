@@ -22,6 +22,9 @@ var statusInterval;
 $(document).ready(function() {
 
 $(document).on('click', 'button', function(){
+
+  $('.center').empty();
+  $('.center').html('<h1 class="fir fadeIn">Randomly picking...</h1>');
     $.ajax({
         url: '/api/crawl/',
         type: 'POST',
@@ -38,7 +41,8 @@ $(document).on('click', 'button', function(){
             type: 'GET',
             success: function(data){
               if(data.status === 'finished'){
-              $('.title').html(data.jsi[0].movie_name)
+              $('.center').empty();
+              $('.center').html("<h1>The movie you should watch is " + "\"" + data.jsi[0].movie_name + "\"" + "</h1>" + "<button type='button' class='button-white' name='button'>Pick random movie</button>").hide().fadeIn();
               clearInterval(statusInterval)
             }
             }
