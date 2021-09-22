@@ -32,7 +32,6 @@ PyDispatcher==2.0.5
 pyOpenSSL==20.0.1
 python-scrapyd-api==2.1.2
 pytz==2021.1
-pywin32==301
 queuelib==1.6.1
 requests==2.26.0
 Scrapy==2.5.0
