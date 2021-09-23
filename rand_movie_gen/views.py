@@ -30,18 +30,18 @@ def index(request):
         task_id = request.GET.get('task_id', None)
         if task_id is not None:
             task_id = task_id[:-1]
-            print(task_id)
+            #print(task_id)
         status = scrapyd.job_status('default', task_id)
-        print(status)
+        #print(status)
         if status == 'finished':
             with open(r"C:\Users\dmanojlovic\Documents\django_random_movie_generator\src\movie_generator\scrape_top_movies\result.json") as f:
                 jso = json.load(f)
-            print('ovo je id', jso[0].get('jobid'))
+            #print('ovo je id', jso[0].get('jobid'))
             data['jsi'] = jso
             data['status'] = status
-            print(data)
+            #print(data)
             return JsonResponse(data)
-    print('task na dnu',task)
+    #print('task na dnu',task)
     return render(request, 'rand_movie_gen/index.html', {})
 
 def home(request):
