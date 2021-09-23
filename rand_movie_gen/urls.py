@@ -7,6 +7,6 @@ app_name = 'rand_movie_gen' # za url putanju do appa
 
 urlpatterns = [
      path('home/', home, name='home'),
-     path('', index, name='index'),
+     path('api/', index, name='index'),
 
 ]
