@@ -24,14 +24,14 @@ def index(request):
     # task_id = request.GET.get('task_id', None)
     # print(task_id)
     # if task_id is None:
-        task = scrapyd.schedule('default', 'top')
+        task = scrapyd.schedule('moviescraper', 'top')
         return JsonResponse({'task':task})
     elif request.method == 'GET':
         task_id = request.GET.get('task_id', None)
         if task_id is not None:
             task_id = task_id[:-1]
             #print(task_id)
-        status = scrapyd.job_status('default', task_id)
+        status = scrapyd.job_status('moviescraper', task_id)
         #print(status)
         if status == 'finished':
             with open(r"C:\Users\dmanojlovic\Documents\django_random_movie_generator\src\movie_generator\scrape_top_movies\result.json") as f:
