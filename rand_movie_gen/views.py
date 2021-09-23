@@ -9,7 +9,7 @@ import json
 # Create your views here.
 
 #scrapyd = ScrapydAPI('http://localhost:6800')
-scrapyd = ScrapydAPI('http://randmoviegen.herokuapp.com:80/')
+scrapyd = ScrapydAPI('https://randmoviegen.herokuapp.com:80/')
 
 @csrf_exempt
 @require_http_methods(['POST', 'GET'])  # only get and post
