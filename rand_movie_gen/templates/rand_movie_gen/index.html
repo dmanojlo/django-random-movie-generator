@@ -26,7 +26,7 @@ $(document).on('click', 'button', function(){
   $('.center').empty();
   $('.center').html('<h1 class="fir fadeIn">Randomly picking...</h1>');
     $.ajax({
-        url: '/api/crawl/',
+        url: '',
         type: 'POST',
         success:  crawlSuccess,
         //error: crawlFail,
@@ -37,7 +37,7 @@ $(document).on('click', 'button', function(){
 
   function checkCrawlStatus(task){
         $.ajax({
-            url: '/api/crawl/?task_id='+taskId+'/',
+            url: '/?task_id='+taskId+'/',
             type: 'GET',
             success: function(data){
               if(data.status === 'finished'){
