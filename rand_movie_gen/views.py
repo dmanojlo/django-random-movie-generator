@@ -34,7 +34,7 @@ def index(request):
         status = scrapyd.job_status('moviescraper', task_id)
         #print(status)
         if status == 'finished':
-            with open(r"C:\Users\dmanojlovic\Documents\django_random_movie_generator\src\movie_generator\scrape_top_movies\result.json") as f:
+            with open(r"result.json") as f:
                 jso = json.load(f)
             #print('ovo je id', jso[0].get('jobid'))
             data['jsi'] = jso
