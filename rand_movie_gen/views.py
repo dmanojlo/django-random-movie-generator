@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from scrapyd_api import ScrapydAPI
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-import json
+import json, urllib.request
 # Create your views here.
 
 #scrapyd = ScrapydAPI('http://localhost:6800')
@@ -34,7 +34,7 @@ def index(request):
         status = scrapyd.job_status('default', task_id)
         #print(status)
         if status == 'finished':
-            with open(r"./result.json") as f:
+            with with urllib.request.urlopen("https://randmovie-scraper.herokuapp.com/logs/result.json") as f:
                 jso = json.load(f)
             #print('ovo je id', jso[0].get('jobid'))
             data['jsi'] = jso
