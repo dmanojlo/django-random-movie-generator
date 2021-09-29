@@ -34,7 +34,7 @@ def index(request):
         status = scrapyd.job_status('default', task_id)
         #print(status)
         if status == 'finished':
-            with with urllib.request.urlopen("https://randmovie-scraper.herokuapp.com/logs/result.json") as f:
+            with urllib.request.urlopen("https://randmovie-scraper.herokuapp.com/logs/result.json") as f:
                 jso = json.load(f)
             #print('ovo je id', jso[0].get('jobid'))
             data['jsi'] = jso
